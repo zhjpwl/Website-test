@@ -10,28 +10,66 @@
 <button onclick="openNewWindow()">クリック！</button>
 
 <p>ポップアップで出てきます。</p>
+<p>一つしか出ない場合は下のボタンをクリックしてください。</p>
 
-      <script>
+<button id="openPopupsButton">クリック！</button>
 
-
-        function openNewWindow() {
-
-
-            window.open("https://www.croxyproxy.com");
-window.open("https://timmydonthaverice.gigaportal.pl");
-              window.open("proxy.com"); window.open("proxy.com"); 
-              window.open("proxy.com");
+ <script>
 
 
-        }
+function openNewWindow() {
+
+window.open("https://www.croxyproxy.com");
+window.open("https://timmydonthaverice.gigaportal.pl"); window.open("proxy.com"); window.open("proxy.com"); window.open("proxy.com");
+
+    }
+
+ </script>
+
+<script>
+
+function openMultiplePopups(urls) {
+  if (!Array.isArray(urls)) return;
+
+
+  const openPopup = (url) => {
+    return new Promise((resolve, reject) => {
+      const popup = window.open(url, '_blank');
+      if (popup) {
+        resolve();
+      } else {
+        reject(new Error('Popup blocked'));
+      }
+    });
+  };
+
+  let promise = Promise.resolve();
+  urls.forEach((url) => {
+    promise = promise.then(() => openPopup(url));
+  });
+
+  promise
+    .then(() => {
+      console.log('All popups opened successfully');
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
+}
+
+document.getElementById('openPopupsButton').addEventListener('click', () => {
+
+  const urls = [
+    'https://example1.com',
+    'https://example2.com',
+    'https://example3.com'
+  ];
+
+  openMultiplePopups(urls);
+});
 
 
     </script>
-
-
-</body>
-
-
 
 </body>
 </html>
